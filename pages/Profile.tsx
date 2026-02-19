@@ -9,17 +9,49 @@ interface ProfileProps {
   onBack: () => void;
 }
 
+const BASE = import.meta.env.VITE_API_URL ?? '';
+const API_URL = `${BASE}/api/auth`;
+
 const Profile: React.FC<ProfileProps> = ({ user, onSave, onBack }) => {
   const [editedUser, setEditedUser] = useState<UserProfile>({ ...user });
   const [showToast, setShowToast] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSave = () => {
-    onSave(editedUser);
-    setShowToast(true);
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('taskflow-token');
+      const res = await fetch(`${API_URL}/profile`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(editedUser)
+      });
+
+      if (!res.ok) {
+        throw new Error('Error al actualizar perfil');
+      }
+
+      onSave(editedUser);
+      setShowToast(true);
+
+      // Volver atrás después de mostrar el toast
+      setTimeout(() => {
+        onBack();
+      }, 1500);
+
+    } catch (error) {
+      console.error(error);
+      alert('Error al guardar los cambios');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark">
+    <div className="flex flex-col h-[100dvh] overflow-hidden bg-background-light dark:bg-background-dark">
       <header className="flex-none bg-gradient-to-br from-primary to-background-dark pt-12 pb-6 px-6 shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
         <div className="relative z-10 flex justify-between items-center mb-2">
@@ -32,7 +64,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onSave, onBack }) => {
       </header>
 
       <main className="flex-1 flex flex-col relative bg-background-light dark:bg-background-dark -mt-4 rounded-t-3xl overflow-hidden shadow-[0_-4px_20px_rgba(0,0,0,0.2)]">
-        <div className="w-full max-w-md mx-auto px-6 py-8 flex-1 overflow-y-auto hide-scrollbar">
+        <div className="w-full max-w-md mx-auto px-6 py-8 pb-32 flex-1 overflow-y-auto hide-scrollbar">
           <div className="bg-white dark:bg-surface-dark rounded-2xl shadow-sm p-8 space-y-6 border border-slate-100 dark:border-white/5">
             <h2 className="text-[1.5rem] font-bold text-slate-800 dark:text-white mb-6 text-center">Configuración de Perfil</h2>
 
@@ -100,10 +132,15 @@ const Profile: React.FC<ProfileProps> = ({ user, onSave, onBack }) => {
                 <button
                   type="button"
                   onClick={handleSave}
-                  className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-primary/30 transition-all active:scale-[0.98] text-sm flex justify-center items-center gap-2"
+                  disabled={loading}
+                  className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-primary/30 transition-all active:scale-[0.98] text-sm flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <span className="material-symbols-outlined text-[20px]">save</span>
-                  Guardar Cambios
+                  {loading ? (
+                    <span className="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
+                  ) : (
+                    <span className="material-symbols-outlined text-[20px]">save</span>
+                  )}
+                  {loading ? 'Guardando...' : 'Guardar Cambios'}
                 </button>
               </div>
             </form>

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 interface AuthUser {
     id: string;
     name: string;
+    lastName?: string;
     email: string;
 }
 
@@ -22,6 +23,7 @@ const Login: React.FC<LoginProps> = ({ onAuthSuccess }) => {
     console.log('DEBUG: BASE is:', BASE);
     const [mode, setMode] = useState<Mode>('login');
     const [name, setName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -30,6 +32,7 @@ const Login: React.FC<LoginProps> = ({ onAuthSuccess }) => {
 
     const resetForm = () => {
         setName('');
+        setLastName('');
         setEmail('');
         setPassword('');
         setError('');
@@ -50,7 +53,7 @@ const Login: React.FC<LoginProps> = ({ onAuthSuccess }) => {
             const endpoint = mode === 'login' ? `${API_URL}/login` : `${API_URL}/register`;
             const body = mode === 'login'
                 ? { email, password }
-                : { name, email, password };
+                : { name, lastName, email, password };
 
             const res = await fetch(endpoint, {
                 method: 'POST',
@@ -168,6 +171,23 @@ const Login: React.FC<LoginProps> = ({ onAuthSuccess }) => {
                                         onChange={(e) => setName(e.target.value)}
                                         placeholder="Tu nombre completo"
                                         required
+                                        className="w-full pl-11 pr-4 py-3.5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-dark text-sm dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
+                                    />
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Campo Apellidos (solo en registro) */}
+                        {mode === 'register' && (
+                            <div className="space-y-2">
+                                <label className="block text-sm font-bold text-slate-700 dark:text-slate-300">Apellidos</label>
+                                <div className="relative">
+                                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">badge</span>
+                                    <input
+                                        type="text"
+                                        value={lastName}
+                                        onChange={(e) => setLastName(e.target.value)}
+                                        placeholder="Tus apellidos"
                                         className="w-full pl-11 pr-4 py-3.5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-surface-dark text-sm dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
                                     />
                                 </div>

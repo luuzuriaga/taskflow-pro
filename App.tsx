@@ -14,6 +14,7 @@ import Login from './pages/Login';
 interface AuthUser {
   id: string;
   name: string;
+  lastName?: string;
   email: string;
 }
 
@@ -54,6 +55,7 @@ const App: React.FC = () => {
   const [user, setUser] = useLocalStorage<UserProfile>('taskflow-user', {
     ...INITIAL_USER,
     name: authUser?.name ?? INITIAL_USER.name,
+    lastName: authUser?.lastName ?? INITIAL_USER.lastName,
   });
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('taskflow-darkmode') === 'true');
@@ -72,7 +74,7 @@ const App: React.FC = () => {
     setAuthToken(token);
     setAuthUser(u);
     // Sincronizar el nombre del perfil con el usuario autenticado
-    setUser((prev) => ({ ...prev, name: u.name }));
+    setUser((prev) => ({ ...prev, name: u.name, lastName: u.lastName || '' }));
   };
 
   const handleLogout = () => {
@@ -140,7 +142,7 @@ const App: React.FC = () => {
 
   const handleUpdateProfile = (updatedUser: UserProfile) => {
     setUser(updatedUser);
-    setCurrentView('tasks');
+    // No cambiamos la vista aquí, dejamos que Profile.tsx maneje el 'onBack' después del toast
   };
 
   // ── Renderizado de vistas ─────────────────────────────────────────────────
