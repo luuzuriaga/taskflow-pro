@@ -13,7 +13,7 @@ app.use(cors({
     origin: [
         'http://localhost:3000',
         'http://localhost:5173',
-        'https://taskflow-pro-vn2u.onrender.com'
+        'https://taskflow-pro-psi.vercel.app'
     ],
     credentials: true,
 }));
