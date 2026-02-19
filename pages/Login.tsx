@@ -52,6 +52,7 @@ const Login: React.FC<LoginProps> = ({ onAuthSuccess }) => {
 
             const res = await fetch(endpoint, {
                 method: 'POST',
+                credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
             });
