@@ -1,0 +1,7 @@
+{
+  "name": "TaskFlow Pro",
+  "description": "A high-performance task management application with a vibrant, modern UI and seamless task tracking capabilities.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskFlow Pro</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        // 🌸 Paleta Kawaii Rosa
+                        "primary": "#FF6B9D",       // Rosa hot principal
+                        "primary-dark": "#e0538a",  // Rosa oscuro (hover)
+
+                        // Modo claro — lavanda y rosa pálido
+                        "background-light": "#fff0f6",  // Rosa pálido muy suave
+                        "surface-light": "#ffffff",
+
+                        // Modo oscuro — púrpura profundo kawaii
+                        "background-dark": "#1a0f1e",  // Púrpura muy oscuro
+                        "surface-dark": "#2a1535",    // Púrpura oscuro
+                        "surface-accent": "#3d1f4e",  // Púrpura medio
+                    },
+                    fontFamily: {
+                        "sans": ["Nunito", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "4xl": "2.5rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            /* Suavizado de scroll */
+            scroll-behavior: smooth;
+        }
+
+        /* Ocultar scrollbar pero mantener funcionalidad */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Transición suave para cambio de tema */
+        .dark body {
+            background-color: #1a0f1e;
+        }
+
+        * {
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "react": "https://esm.sh/react@^19.2.4",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+      }
+    }
+    </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 overflow-hidden">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
