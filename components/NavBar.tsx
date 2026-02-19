@@ -47,17 +47,42 @@ const NavBar: React.FC<NavBarProps> = ({
 
   return (
     <>
-      {/* BARRA INFERIOR (MÓVIL) - Fija abajo, se oculta en edición de tarea */}
-      {!hideMobileNav && (
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-surface-dark border-t border-slate-100 dark:border-white/5 px-6 pb-6 pt-3 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
-          {/* Botón dark mode - esquina superior derecha del nav */}
+      {/* ── BARRA SUPERIOR MÓVIL/TABLET ─────────────────────────────── */}
+      <header className="md:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-white dark:bg-surface-dark border-b border-slate-100 dark:border-white/5 px-4 flex items-center justify-between shadow-sm">
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <div className="bg-primary p-1 rounded-lg text-white">
+            <span className="material-symbols-outlined text-[20px]">bolt</span>
+          </div>
+          <span className="text-base font-black tracking-tight dark:text-white">
+            TaskFlow <span className="text-primary">PRO</span>
+          </span>
+        </div>
+
+        {/* Acciones */}
+        <div className="flex items-center gap-1">
+          {/* Toggle dark mode */}
           <button
             onClick={toggleDarkMode}
-            className="absolute -top-4 right-4 w-8 h-8 rounded-full bg-white dark:bg-surface-dark shadow-md border border-slate-100 dark:border-white/10 flex items-center justify-center text-slate-500 dark:text-slate-300 transition-all"
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
             aria-label="Cambiar tema"
           >
-            <span className="material-symbols-outlined text-[18px]">{isDarkMode ? 'light_mode' : 'dark_mode'}</span>
+            <span className="material-symbols-outlined text-[20px]">{isDarkMode ? 'light_mode' : 'dark_mode'}</span>
           </button>
+          {/* Cerrar sesión */}
+          <button
+            onClick={onLogout}
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
+            aria-label="Cerrar sesión"
+          >
+            <span className="material-symbols-outlined text-[20px]">logout</span>
+          </button>
+        </div>
+      </header>
+
+      {/* ── BARRA INFERIOR MÓVIL ────────────────────────────────────── */}
+      {!hideMobileNav && (
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-surface-dark border-t border-slate-100 dark:border-white/5 px-6 pb-6 pt-3 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
           <div className="flex justify-between items-end max-w-md mx-auto relative">
             <NavItem view="tasks" icon="format_list_bulleted" label="Tareas" />
             <NavItem view="calendar" icon="calendar_month" label="Calendario" />

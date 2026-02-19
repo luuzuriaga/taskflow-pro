@@ -176,7 +176,7 @@ const App: React.FC = () => {
         authUser={authUser}
       />
 
-      <main className="flex-1 h-full overflow-hidden relative">
+      <main className="flex-1 h-full overflow-hidden relative pt-14 md:pt-0">
         {renderContent()}
       </main>
 

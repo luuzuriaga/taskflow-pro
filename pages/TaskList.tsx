@@ -43,7 +43,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, user, onToggleTask, onEditTa
   return (
     <div className="flex flex-col h-full bg-slate-50 dark:bg-background-dark">
       {/* Header Dinámico: Gradiente en móvil, Clean en PC */}
-      <header className="flex-none bg-gradient-to-br from-primary to-background-dark md:from-white md:to-white dark:md:from-surface-dark dark:md:to-surface-dark pt-12 md:pt-10 pb-10 md:pb-10 px-6 md:px-10 shadow-lg md:shadow-none relative overflow-hidden transition-all">
+      <header className="flex-none bg-gradient-to-br from-primary to-background-dark md:from-white md:to-white dark:md:from-surface-dark dark:md:to-surface-dark pt-5 md:pt-10 pb-10 md:pb-10 px-6 md:px-10 shadow-lg md:shadow-none relative overflow-hidden transition-all">
         {/* Círculo decorativo solo visible en móvil */}
         <div className="md:hidden absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
