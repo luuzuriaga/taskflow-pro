@@ -18,6 +18,8 @@ const BASE = import.meta.env.VITE_API_URL ?? '';
 const API_URL = `${BASE}/api/auth`;
 
 const Login: React.FC<LoginProps> = ({ onAuthSuccess }) => {
+    console.log('DEBUG: VITE_API_URL is:', import.meta.env.VITE_API_URL);
+    console.log('DEBUG: BASE is:', BASE);
     const [mode, setMode] = useState<Mode>('login');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
