@@ -10,7 +10,11 @@ const PORT = process.env.PORT || 5000;
 
 // ── Middlewares ──────────────────────────────────────────────────────────────
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:5173'],
+    origin: [
+        'http://localhost:3000',
+        'http://localhost:5173',
+        'https://taskflow-pro-vn2u.onrender.com'
+    ],
     credentials: true,
 }));
 app.use(express.json());
