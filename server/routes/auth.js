@@ -14,6 +14,7 @@ const generateToken = (userId) => {
 // ── POST /api/auth/register ─────────────────────────────────────────────────
 router.post('/register', async (req, res) => {
     try {
+        console.log('DEBUG: Register payload received:', req.body);
         const { name, lastName, email, password } = req.body;
 
         if (!name || !email || !password) {
