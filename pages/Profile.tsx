@@ -31,7 +31,9 @@ const Profile: React.FC<ProfileProps> = ({ user, onSave, onBack }) => {
       });
 
       if (!res.ok) {
-        throw new Error('Error al actualizar perfil');
+        const errorData = await res.json();
+        console.error('SERVER ERROR:', res.status, errorData);
+        throw new Error(errorData.message || 'Error al actualizar perfil');
       }
 
       onSave(editedUser);
