@@ -7,13 +7,11 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: [true, 'El nombre es obligatorio'],
             trim: true,
-            maxlength: [60, 'El nombre no puede superar 60 caracteres'],
         },
         lastName: {
             type: String,
             trim: true,
-            maxlength: [60, 'El apellido no puede superar 60 caracteres'],
-            default: '',
+            default: '', // Importante para que no sea null
         },
         email: {
             type: String,
@@ -21,18 +19,17 @@ const UserSchema = new mongoose.Schema(
             unique: true,
             lowercase: true,
             trim: true,
-            match: [/^\S+@\S+\.\S+$/, 'Formato de correo inválido'],
         },
         password: {
             type: String,
             required: [true, 'La contraseña es obligatoria'],
-            minlength: [6, 'La contraseña debe tener al menos 6 caracteres'],
+            minlength: 6,
         },
     },
     { timestamps: true }
 );
 
-// Hash de la contraseña antes de guardar
+// Encriptar contraseña solo si se modifica
 UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     const salt = await bcrypt.genSalt(10);
@@ -40,9 +37,8 @@ UserSchema.pre('save', async function (next) {
     next();
 });
 
-// Método para comparar contraseñas
-UserSchema.methods.comparePassword = async function (candidatePassword) {
-    return bcrypt.compare(candidatePassword, this.password);
+UserSchema.methods.comparePassword = async function (password) {
+    return bcrypt.compare(password, this.password);
 };
 
 module.exports = mongoose.model('User', UserSchema);
